@@ -56,65 +56,46 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
+
+
+
 --Which company in the technology industry has the greatest revenue?
 SELECT company_name, MAX(revenue) AS revenue
 FROM fortune_companies
 WHERE industry="Technology"
 ;
---Here I aggregated data to find which tech company was producing the greatest revenue.
 
 
-
-
---Which companies across all industries have the greatest employee retention?
+--Across all industries, Which companies have the greatest employee retention and what industry are they in?
 SELECT company_name, industry, MAX(avg_employee_tenure) AS tenure
 FROM fortune_companies
 GROUP BY industry
 ;
---Here I used SQL to find which companies across all industries have the greatest employee retention. 
 
 
-
-
---what is the average number of employees across all industries?
+--What are the average numbers of employees across all industries?
 SELECT industry, ROUND(AVG(employees)) AS avg_employees
 FROM fortune_companies
 GROUP BY industry
 ;
---Here I aggregated data to figure the average number of employees across each industry.
 
 
-
-
-
---Which industries have an average number of employees that are at least 100,000 employees or greater.
+--Which industries have an average number of employees of 100,000 employees or greater?
 SELECT industry, ROUND(AVG(employees)) AS avg_employees
 FROM fortune_companies
 GROUP BY industry
 HAVING avg_employees>=100000
 ;
---Here I aggregated data to find relevant industries where the average number of employees was at least 100,000 employees or greater.
 
 
-
-
-
---What industries have more than 500,000 employees?
-SELECT industry, sum(employees) AS total_employees
-FROM fortune_companies
-GROUP BY industry
-HAVING total_employees>500000
-;
-
-
-
---Here I aggregated data to compare the average pto each industry offers
+--What is the average pto days offered for each industry?
 SELECT industry, ROUND(AVG(paid_time_off_days)) AS average_pto
 FROM fortune_companies
 GROUP BY industry
 ;
 
---Here I found the companies that had >= 15 pto days AND >=10 weeks of maternity leave
+
+--What companies have >= 15 pto days AND >=10 weeks of maternity leave?
 SELECT company_name, paid_time_off_days, maternity_leave_weeks
 FROM fortune_companies
 WHERE paid_time_off_days>=15
@@ -122,13 +103,24 @@ AND maternity_leave_weeks>=12
 ORDER BY company_name
 ;
 
---Here I found comanies that have >=20 pto days OR offered healthcare_benefits.
+
+--What companies have >=20 pto days OR offered healthcare_benefits?
 SELECT company_name, paid_time_off_days
 FROM fortune_companies
 WHERE paid_time_off_days>=20
 OR healthcare_benefits=1
 ORDER BY company_name
 ;
+
+
+--Here I used SQL to aggregate industry revenue based on industries that have an industry revenue sum greater than 200.
+SELECT industry, SUM(ROUND(revenue)) AS industry_revenue_sum
+FROM fortune_companies
+GROUP BY industry
+HAVING revenue>=200
+ORDER BY industry_revenue_sum DESC
+;
+
 
 --Here I utilized a case statement to separate company size (large, medium, small) based on number of employees.
 SELECT company_name, employees,
@@ -140,7 +132,7 @@ FROM fortune_companies
 ORDER BY employees DESC
 ;
 
---Here I used SQL to determine company size (large_cap, medium_cap, small_cap) based of revenue
+--Here I used SQL to determine company size (large_cap, medium_cap, small_cap) based off revenue
 SELECT company_name, revenue,
 CASE WHEN revenue>=300 THEN "large_cap"
 WHEN revenue>=200 THEN "medium_cap"
@@ -150,10 +142,3 @@ FROM fortune_companies
 ORDER BY company_size
 ;
 
---Here I used SQL to aggregate industry revenue based on industries that have a industry revenue sum greater than 200.
-SELECT industry, SUM(ROUND(revenue)) AS industry_revenue_sum
-FROM fortune_companies
-GROUP BY industry
-HAVING revenue>=200
-ORDER BY industry_revenue_sum DESC
-;
