@@ -35,7 +35,7 @@ FROM superstore
 
 SELECT SUM(price)
 FROM superstore
-WHERE category = "Kitchen Supplies"
+WHERE category="Kitchen Supplies"
 ;
 
 
@@ -45,7 +45,7 @@ SELECT item_name
 ,price
 ,average_rating
 FROM superstore
-WHERE prie >50
+WHERE price >50
 ORDER BY average_rating DESC
 LIMIT 3
 ;
