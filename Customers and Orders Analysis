@@ -79,6 +79,7 @@ WHERE location like '%Los Angeles%'
 GROUP BY product
 ;
 
+
 -- Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
 SELECT distinct location, count(OrderID)
 FROM JanSales
