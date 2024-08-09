@@ -1,0 +1,71 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+
+-- what song has the greatest danceablility?
+SELECT track_name, max(danceability)
+FROM Spotifydata
+GROUP BY track_name
+ORDER BY danceability desc
+LIMIT 1
+;
+
+
+-- order the artists and songs based on the energy level.
+SELECT artist_name, track_name
+,CASE WHEN energy >=.8 THEN 'high'
+WHEN energy >=.5 THEN 'medium'
+ELSE 'low'
+END AS energy_level
+FROM Spotifydata
+;
+
+
+--What Olivia Rodrigo songs are included in this list and their popularity?
+SELECT track_name, popularity
+FROM Spotifydata
+WHERE artist_name='Olivia Rodrigo'
+;
+
+
+-- What is the average loudness of Olivia Rodrigo songs?
+SELECT artist_name, AVG(loudness)
+FROM Spotifydata
+WHERE artist_name='Olivia Rodrigo'
+GROUP BY artist_name
+;
+
+
+-- What artist released the longest song?
+SELECT artist_name, duration_ms
+FROM Spotifydata
+ORDER BY duration_ms desc
+LIMIT 1
+;
