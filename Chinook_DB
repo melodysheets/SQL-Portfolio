@@ -1,9 +1,4 @@
-SELECT *
-FROM chinook.invoices
-;
-
 -- 1.Show Customers (their full names, customer ID, and country) who are not in the US.
--- (Hint: != or <> can be used to say "is not equal to")
 SELECT FirstName, LastName, CustomerId, Country
 FROM chinook.customers
 WHERE country <> 'US'
@@ -15,8 +10,7 @@ FROM chinook.customers
 WHERE country ='Brazil'
 ;
 
--- 3.Find the Invoices of customers who are from Brazil. The resulting table should show 
--- the customer's full name, Invoice ID, Date of the invoice, and billing country.
+-- 3.Find the Invoices of customers who are from Brazil. 
 SELECT FirstName, LastName, BillingCountry, InvoiceDate, Invoiceid
 FROM chinook.invoices
 JOIN chinook.customers
@@ -43,7 +37,6 @@ FROM chinook.invoices
 ;
 
 -- 6.Provide a query that shows the invoices associated with each sales agent. 
--- The resulting table should include the Sales Agent's full name.
 SELECT emp.LastName, emp.Firstname, inv.InvoiceId
 FROM chinook.Employees emp 
 JOIN chinook.Customers cust 
